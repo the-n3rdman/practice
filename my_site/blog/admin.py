@@ -4,7 +4,9 @@ from . import models
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author',)
+    list_display = ('title', 'author', 'date')
+    list_filter = ('author', 'tags', )
+    prepopulated_fields = {'slug': ('title',)}
 
 
 admin.site.register(models.Author)
