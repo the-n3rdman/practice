@@ -1,4 +1,5 @@
 from . import forms
+from . import models
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
@@ -21,6 +22,9 @@ def review(request):
     if request.method == 'POST':
         form = forms.ReviewForm(request.POST)
         if form.is_valid():
+            review = models.Review(user_name=form.cleaned_data['user_name'],
+                                   review_text=form.cleaned_data['review_text'],
+                                   rating=form.cleaned_data['rating'])
             return HttpResponseRedirect('/thank_you')
     else:
         # adding an else here so if the request method is get then only new form is shown but if get method is post and form is invalid then the form with errors is renderd
