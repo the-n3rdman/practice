@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -10,7 +11,7 @@
         <title>Your review</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="{% static 'reviews/styles.css'%}">
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -18,11 +19,20 @@
         <![endif]-->
         <form action="/" method="POST">
             {% csrf_token %}
-            {% if has_error %}
+            {% comment %} {% if has_error %}
                 <p>The form has errors.</p>
             {% endif %}
             <label for="username">Your name</label>
-            <input id="username" name="user_name" type="text">
+            <input id="username" name="user_name" type="text"> {% endcomment %}
+            
+            <!-- We can generate the form fields individually too. For ex: -->
+            <div class="form-control {% if form.user_name.errors %} invalid {% endif %}">
+                <!--  Here we add a new class to div in case of errors -->
+                    {{ form.user_name.label_tag }}
+                    {{ form.user_name }}
+                    {{ form.user_name.errors }}
+            </div> 
+            <!-- or just send the form completely {{form}}-->
             <button>Send</button>
         </form>
         <script src="" async defer></script>
