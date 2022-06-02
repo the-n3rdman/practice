@@ -6,3 +6,5 @@ class ReviewForm(forms.Form):
         "required": "Name field cant be empty",
         "max_length": "please enter a shorter name"
     })
+    review_text = forms.CharField(label='Your feedback', widget=forms.Textarea)
+    rating = forms.IntegerField(label='Your rating', min_value=1, max_value=5)

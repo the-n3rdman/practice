@@ -26,12 +26,15 @@
             <input id="username" name="user_name" type="text"> {% endcomment %}
             
             <!-- We can generate the form fields individually too. For ex: -->
-            <div class="form-control {% if form.user_name.errors %} invalid {% endif %}">
-                <!--  Here we add a new class to div in case of errors -->
-                    {{ form.user_name.label_tag }}
-                    {{ form.user_name }}
-                    {{ form.user_name.errors }}
-            </div> 
+            {% for field in form %}
+                <div class="form-control {% if field.errors %} invalid {% endif %}">
+                    <!--  Here we add a new class to div in case of errors -->
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {{ field.errors }}
+                </div> 
+            {% endfor %}
+            
             <!-- or just send the form completely {{form}}-->
             <button>Send</button>
         </form>
