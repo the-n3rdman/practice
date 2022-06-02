@@ -70,4 +70,6 @@ def home(request):
 
 def post_detail(request, slug):
     identify_post = get_object_or_404(Post, slug=slug)
-    return render(request, 'blog/post_detail.html', {'post': identify_post})
+    return render(request, 'blog/post_detail.html', {'post': identify_post,
+                                                     "post_tags": identify_post.tags.all(),
+                                                     })
