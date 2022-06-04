@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views import View
 from django.views.generic.base import TemplateView
+from django.views.generic import ListView, DetailView
 
 # Create your views here.
 
@@ -57,4 +58,31 @@ class ThankYouView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['message'] = 'This works'
+        return context
+
+
+class ReviewsListView(TemplateView):
+    template_name = 'reviews/review_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        reviews = models.Review.objects.all()
+        context['reviews'] = reviews
+        return context
+
+# This same work can be done by the code below.
+# class ReviewsListView(ListView):
+#     template_name = 'reviews/review_list.html'
+#     model = models.Review
+#     context_object_name = "reviews"
+
+
+class ReviewDetailView(TemplateView):
+    template_name = 'reviews/single_review.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        review_id = self.kwargs["id"]
+        review = models.Review.objects.get(pk=review_id)
+        context['review'] = review
         return context
