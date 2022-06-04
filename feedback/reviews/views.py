@@ -2,7 +2,8 @@ from . import forms
 from . import models
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-
+from django.views import View
+from django.views.generic.base import TemplateView
 
 # Create your views here.
 
@@ -42,5 +43,18 @@ def review(request):
     return render(request, 'reviews/review.html', {'form': form})
 
 
-def thank_you(request):
-    return render(request, 'reviews/thank_you.html')
+# def thank_you(request):
+#     return render(request, 'reviews/thank_you.html')
+# or do this by
+# class ThankYouView(View):
+#     def get(self, request):
+#         return render(request, 'reviews/thank_you.html')
+# or do this
+class ThankYouView(TemplateView):
+    template_name = 'reviews/thank_you.html'
+
+    # to send a context along
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['message'] = 'This works'
+        return context
